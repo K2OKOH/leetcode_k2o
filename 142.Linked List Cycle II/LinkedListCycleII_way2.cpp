@@ -17,36 +17,24 @@ class Solution {
 public:
     ListNode *detectCycle(ListNode *head)
     {
-        struct ListNode *fast, *slow;
-        fast = head->next;
-        slow = head->next;
-        int cnt = 0,meet_flag = 0;
-        while(fast != nullptr)
+        struct ListNode *fast = head, *slow = head;
+        do
         {
-            if(fast == slow)
+            if(!fast || !fast->next)
             {
-                cout << "fast: " << fast->val << "\tslow: " << slow->val << "\n";
-                if(meet_flag == 0)
-                {
-                    fast = head->next;
-                    slow = slow->next;
-                    cnt = 0;
-                    meet_flag = 1;
-                    continue;
-                }
-                else
-                {
-                    return slow;
-                }
+                return nullptr;
             }
+            fast = fast->next->next;
+            slow = slow->next;
+        } while(fast != slow);
+        cout << "fast: " << fast->val << "\tslow: " << slow->val << "\n";
+        fast = head;
+        while(fast != slow)
+        {
             fast = fast->next;
-            cnt++;
-            if(cnt%2 == 0)
-            {
-                slow = slow->next;
-            }
+            slow = slow->next;
         }
-        return nullptr;
+        return fast;
     }
 };
 
@@ -64,12 +52,14 @@ struct ListNode *AddNode(struct ListNode *head, int i)
 
 void ShowLink(struct ListNode *head)
 {
-    struct ListNode *temp = head->next;
+    struct ListNode *temp = head;
     cout << "ID\tname\n";
-    while(temp != nullptr)
+    int cnt = 0;
+    while(temp != nullptr && cnt < 10)
     {
         cout << temp->val << " -> ";
         temp = temp -> next;
+        cnt++;
     }
     cout << "\n";
 }
@@ -89,8 +79,9 @@ int main()
         // ShowLink(head);
     }
     head->next->next->next->next->next = head->next->next;
+    head = head->next;
 
-    // ShowLink(head);
+    ShowLink(head);
     head = S.detectCycle(head);
     // ShowLink(head);
     cout << "Out: " << head->val << "\n";

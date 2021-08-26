@@ -46,12 +46,14 @@ struct ListNode *AddNode(struct ListNode *head, int i)
 
 void ShowLink(struct ListNode *head)
 {
-    struct ListNode *temp = head->next;
+    struct ListNode *temp = head;
     cout << "ID\tname\n";
-    while(temp != nullptr)
+    int cnt = 0;
+    while(temp != nullptr && cnt < 10)
     {
         cout << temp->val << " -> ";
         temp = temp -> next;
+        cnt++;
     }
     cout << "\n";
 }
@@ -68,11 +70,12 @@ int main()
     for(int i=0;i<4;i++)
     {
         head = AddNode(head, nlist[i]);
-        ShowLink(head);
+        // ShowLink(head);
     }
     head->next->next->next->next->next = head->next->next;
+    head = head->next;
 
-    // ShowLink(head);
+    ShowLink(head);
     head = S.detectCycle(head);
     // ShowLink(head);
     cout << "Out: " << head->val << "\n";
