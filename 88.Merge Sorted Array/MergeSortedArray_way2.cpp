@@ -1,4 +1,3 @@
-
 # include<vector>
 # include<iostream>
 # include<algorithm>
@@ -24,7 +23,7 @@ public:
 int main()
 {
     Solution S;
-    vector<int> nums1={0}, nums2 = {1};
+    vector<int> nums1 = {0}, nums2 = {1};
     int m = 0, n = 1;
     S.merge(nums1, m, nums2, n);
     cout << "Out: [";
