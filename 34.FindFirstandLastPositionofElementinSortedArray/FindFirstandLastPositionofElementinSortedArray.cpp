@@ -25,9 +25,7 @@ int main()
     Solution So;
     vector<int> nums = {1}, ans;
     int target = 1;
-
     ans = So.searchRange(nums, target);
-
     cout << "Out: [" << ans[0] << ", " << ans[1] << "]\n";
     return 0;
 }
