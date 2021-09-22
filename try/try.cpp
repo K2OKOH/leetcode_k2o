@@ -1,69 +1,34 @@
 # include<iostream>
 # include<vector>
+#include <algorithm>
 
 using namespace std;
 
-int main()
-{
-    int A = 3, B = 3, C = 3, x = 1, y = 2, z = 3;
-    int cost = -1;
-    if(A == B && B == C) {
-        if(y<=x && y<=z) {
-            cost = y*2 + ((x<z)? x:z);
-        }
-    }
-    else if(A>=B && B>=C) {
-        int cos_a, cos_b;
-        if(C > 1) {
-            cos_b = (B-C+1)*y;
-        }
-        else{
-            cos_b = -1;
-        }
-        if(B > 1) {
-            if(B-1 == C) {
-                if(C > 1)
-                    cos_a = (A-C+1)*x;
-                else
-                    cos_a = -1;
-            }
-            else {
-                cos_a = (A-B+1)*x;
-            }
-        }
-        if(cos_a == -1) cost = cos_b;
-        else if(cos_b == -1) cost = cos_a;
-        else if(cos_b == -1 && cos_a == -1) cost = -1;
-        else cost = (cos_a < cos_b)? cos_a : cos_b;
-    }
-    else if(A<=B && B<=C) {
-        int cos_c, cos_b;
-        if(A > 1) {
-            cos_b = (B-A+1)*y;
-        }
-        else{
-            cos_b = -1;
-        }
+vector<int> find_p(vector<int> person_i, vector<float> cost_i, vector<float> p_i, int avg_cost) {
+    vector<float> ave_p;
+    vector<int> ans;
+    float cost = 0, person_num = 0;
 
-        if(B > 1) {
-            if(B-1 == A) {
-                if(A > 1)
-                    cos_c = (C-A+1)*z;
-                else
-                    cos_c = -1;
-            }
-            else {
-                cos_c = (C-B+1)*z;
-            }
-        }
-        if(cos_c == -1) cost = cos_b;
-        else if(cos_b == -1) cost = cos_c;
-        else if(cos_b == -1 && cos_c == -1) cost = -1;
-        else cost = (cos_c < cos_b)? cos_c : cos_b;
+    for(auto p : person_i) { ave_p.push_back(cost_i[p-1]/p_i[p-1]); }
+    sort(person_i.begin(), person_i.end(), [&ave_p](int a,int b){ return ave_p[a-1]<ave_p[b-1]; });
+    for(auto p : person_i) {
+        cost += cost_i[p-1];
+        person_num += p_i[p-1];
+        if(cost/person_num < avg_cost)
+            ans.push_back(p);
     }
-    else{
-        cost = 0;
+    return ans;
+}
+
+int main() {
+    vector<int> person_i = {1,2,3,4,5};
+    vector<float> cost_i = {2.0,3.0,1.0,4.0,2.0};
+    vector<float> p_i = {0.2,0.1,0.2,0.1,0.4};
+    float avg_cost = 9.5;
+    vector<int> ans;
+    ans = find_p(person_i, cost_i, p_i, avg_cost);
+    for(auto a : ans) {
+        cout << a << ", ";
     }
-    cout << cost << endl;
-    return 0;
+    cout << endl;
 }
