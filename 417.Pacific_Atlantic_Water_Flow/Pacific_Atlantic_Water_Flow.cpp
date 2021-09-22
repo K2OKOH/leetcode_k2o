@@ -9,23 +9,23 @@ using namespace std;
 class Solution {
 public:
     vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
+        if (heights.empty() || heights[0].empty()) return {};
         int W = heights[0].size(), H = heights.size();
         vector<vector<bool>> T_flag(H,vector<bool>(W,true)), D_flag(H,vector<bool>(W,true));
-        vector<vector<int>> top_T, top_D;
         vector<vector<int>> ans;
         // 对上边，左边进行搜索
         for(int idx_w=0;idx_w<W;idx_w++) {
-            dfs_T(heights,0,idx_w,T_flag);
+            dfs(heights,0,idx_w,T_flag);
         }
         for(int idx_h=1;idx_h<H;idx_h++) {
-            dfs_T(heights,idx_h,0,T_flag);
+            dfs(heights,idx_h,0,T_flag);
         }
         // 对下边，右边进行搜索
         for(int idx_w=0;idx_w<W;idx_w++) {
-            dfs_D(heights,H-1,idx_w,D_flag);
+            dfs(heights,H-1,idx_w,D_flag);
         }
         for(int idx_h=0;idx_h<H-1;idx_h++) {
-            dfs_D(heights,idx_h,W-1,D_flag);
+            dfs(heights,idx_h,W-1,D_flag);
         }
         for(int idx_w=0;idx_w<W;idx_w++) {
             for(int idx_h=0;idx_h<H;idx_h++) {
@@ -36,38 +36,22 @@ public:
         return ans;
     }
 private:
-    void dfs_T(vector<vector<int>>& heights, int idx_y, int idx_x, vector<vector<bool>>& T_flag) {
+    void dfs(vector<vector<int>>& heights, int idx_y, int idx_x, vector<vector<bool>>& flag) {
         // 记录当前值
-        T_flag[idx_y][idx_x] = false;
+        if(flag[idx_y][idx_x] == false) return;
+        flag[idx_y][idx_x] = false;
         // 寻找下一个
         if(idx_y+1<heights.size() && heights[idx_y][idx_x] <= heights[idx_y+1][idx_x] ) {
-            dfs_T(heights, idx_y+1, idx_x, T_flag);
+            dfs(heights, idx_y+1, idx_x, flag);
         }
         if(idx_x+1<heights[0].size() && heights[idx_y][idx_x] <= heights[idx_y][idx_x+1]) {
-            dfs_T(heights, idx_y, idx_x+1, T_flag);
+            dfs(heights, idx_y, idx_x+1, flag);
         }
-        if(idx_y>0 && heights[idx_y][idx_x] < heights[idx_y-1][idx_x]) {
-            dfs_T(heights, idx_y-1, idx_x, T_flag);
-        }
-        if(idx_x>0 && heights[idx_y][idx_x] < heights[idx_y][idx_x-1]) {
-            dfs_T(heights, idx_y, idx_x-1, T_flag);
-        }
-    }
-    void dfs_D(vector<vector<int>>& heights, int idx_y, int idx_x, vector<vector<bool>>& D_flag) {
-        // 记录当前值
-        D_flag[idx_y][idx_x] = false;
-        // 寻找下一个
         if(idx_y>0 && heights[idx_y][idx_x] <= heights[idx_y-1][idx_x]) {
-            dfs_D(heights, idx_y-1, idx_x, D_flag);
+            dfs(heights, idx_y-1, idx_x, flag);
         }
         if(idx_x>0 && heights[idx_y][idx_x] <= heights[idx_y][idx_x-1]) {
-            dfs_D(heights, idx_y, idx_x-1, D_flag);
-        }
-        if(idx_y+1<heights.size() && heights[idx_y][idx_x] < heights[idx_y+1][idx_x] ) {
-            dfs_D(heights, idx_y+1, idx_x, D_flag);
-        }
-        if(idx_x+1<heights[0].size() && heights[idx_y][idx_x] < heights[idx_y][idx_x+1]) {
-            dfs_D(heights, idx_y, idx_x+1, D_flag);
+            dfs(heights, idx_y, idx_x-1, flag);
         }
     }
 };
