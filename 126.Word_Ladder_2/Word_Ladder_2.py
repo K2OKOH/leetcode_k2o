@@ -80,7 +80,6 @@ class Solution:
         if(found):
             path = [beginWord]
             self.backtracking(beginWord, endWord, wnext, path, ans)
-
         return ans
 
 
