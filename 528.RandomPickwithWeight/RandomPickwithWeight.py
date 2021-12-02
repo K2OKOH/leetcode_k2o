@@ -10,6 +10,7 @@ class Solution:
 
     def pickIndex(self) -> int:
         x = random.randint(1, self.sum)
+        # 用插入位置的概率，形成权重
         return bisect.bisect_left(self.pre, x)
 
 if __name__ == '__main__':
