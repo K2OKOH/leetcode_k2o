@@ -1,6 +1,4 @@
-from collections import defaultdict
 from typing import List
-import itertools
 
 class Solution:
     def countBits(self, n: int) -> List[int]:
