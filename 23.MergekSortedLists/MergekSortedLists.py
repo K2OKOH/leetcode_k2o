@@ -4,28 +4,67 @@ class ListNode:
         self.val = val
         self.next = next
 
+class SingleLinkList(object):
+    def __init__(self, l) -> None:
+        super().__init__()
+        self.val = None
+        self.next = None
+        # self.header = None
+        self.length = 0
+        if (l != []):
+            self.length = len(l)
+            for idx in range(self.length):
+                n_node = ListNode(l[idx])
+                self.append(n_node)
+    
+    def is_empty(self):
+        if (self.val == None):
+            return True
+        else:
+            return False
+
+    def add(self, node:ListNode):
+        if (self.is_empty()):
+            self.val = node.val
+            self.next = node.next
+        else:
+            node.next = self.next
+            self.next = node
+        self.length += 1
+
+    def append(self, node:ListNode):
+        current_Node = self
+        if (self.is_empty()):
+            self.add(node)
+        else:
+            # 当下一个不为「空」时，持续寻求下一个
+            while(current_Node.next != None):
+                current_Node = current_Node.next
+            # 为「空」的指针指向下一个节点
+            current_Node.next = node
+            self.length += 1
+
 # class Solution:
 #     def mergeKLists(self, lists: List[ListNode]) -> ListNode:
 
 #         return List
 
 if __name__ == '__main__':
-    def Init_List(Lists:list):
-        List = ListNode()
-        List_temp = List
-        length = len(Lists)
-        for idx in range(length):
-            List_temp.val = Lists[idx]
-            List_temp = List_temp.next
-        return List
-
-
-    List = Init_List([1, 4, 5])
-    # temperatures = [73,74,75,71,69,72,76,73]
+    # 初始化数组
+    Input_List = [[1,4,5],[1,3,4],[2,6]]
+    list_len = len(Input_List)
+    all_list = []
+    for idx in range(list_len):
+        meta_list = SingleLinkList(Input_List[idx])
+        all_list.append(meta_list)
     # So = Solution()
     # ans = So.dailyTemperatures(temperatures)
     # print(ans)
-    a = List
-    while(a != None):
-        print(a.val)
-        a = a.next
+    a = all_list[0]
+    for idx in range(list_len):
+        a = all_list[idx]
+        print('------')
+        while(a != None):
+            print(a.val)
+            a = a.next
+        print('------')
