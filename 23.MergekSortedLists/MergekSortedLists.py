@@ -56,14 +56,18 @@ class Solution:
         dummy = ListNode(0)
         p = dummy
         head = []
+        # 先把三个头放入
         for i in range(len(lists)):
             if (lists[i]):
                 heapq.heappush(head, (lists[i].val, i))
                 lists[i] = lists[i].next
         while head:
+            # 取出最小值
             val, idx = heapq.heappop(head)
+            # 把最小值插入列表
             p.next = ListNode(val)
             p = p.next
+            # 把该队列的下一个值插入
             if lists[idx]:
                 heapq.heappush(head, (lists[idx].val, idx))
                 lists[idx] = lists[idx].next
