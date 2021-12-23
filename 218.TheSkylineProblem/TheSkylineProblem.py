@@ -10,9 +10,7 @@ class Solution:
         cur_x = 0
         cur_y = 0
         while(idx < b_len or len(priority_heap)!=0):
-            # 当前左 < 最高右
-            # if (priority_heap != []):
-            #     print(heapq.nlargest(1, priority_heap)[0][1])
+            # 当前左 < 最高右 (当前的做顶点 包含在最高的右内)
             if ((len(priority_heap) == 0) or idx < b_len and buildings[idx][0] <= heapq.nlargest(1, priority_heap)[0][1]):
                 # 取当前左值
                 cur_x = buildings[idx][0]
@@ -20,7 +18,7 @@ class Solution:
                     # 把 (右, 高) 放入堆中
                     heapq.heappush(priority_heap,[buildings[idx][2], buildings[idx][1]])
                     idx += 1
-            # 当前左 > 最高右
+            # 当前左 > 最高右 (一堆方块结束，开始从上到下找边)
             else:
                 # 取最高 右值
                 cur_x = heapq.nlargest(1, priority_heap)[0][1]
