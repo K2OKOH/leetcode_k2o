@@ -26,7 +26,7 @@ class Solution:
                 cur_x = heapq.nlargest(1, priority_heap)[0][1]
                 # 把 <= 最高 右 的去除
                 while ((len(priority_heap) != 0) and cur_x >= heapq.nlargest(1, priority_heap)[0][1]):
-                    heapq._heappop_max(priority_heap)
+                    priority_heap.remove(heapq.nlargest(1, priority_heap)[0])
             cur_y = heapq.nlargest(1,priority_heap)[0][0] if (priority_heap != []) else 0
             # 如果 ans 变化了, 添加更新
             if (ans == [] or cur_y != ans[-1][1]):
