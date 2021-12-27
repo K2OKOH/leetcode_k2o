@@ -5,11 +5,18 @@ class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
         queue = []
         ans = []
-        for n in nums:
-            queue.append(n)
-            if (len(queue) >= k):
-                ans.append(max(queue))
+        for idx in range(len(nums)):
+            # 把超出窗的序号去除
+            if (len(queue) != 0 and queue[0] == idx-k):
                 queue.pop(0)
+            # 把小于当前值的数去除
+            while (len(queue) != 0 and nums[queue[-1]] < nums[idx]):
+                queue.pop()
+            # 把当前序号加入队列
+            queue.append(idx)
+            # 把队列中的第一个数放入ans中
+            if (idx >= k - 1):
+                ans.append(nums[queue[0]])
         return ans
 
 if __name__ == '__main__':
