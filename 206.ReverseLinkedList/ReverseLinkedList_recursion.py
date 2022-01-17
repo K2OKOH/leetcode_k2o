@@ -48,21 +48,13 @@ class SingleLinkList(object):
             self.length += 1
 
 class Solution:
-    def reverseList(self, head: ListNode) -> ListNode:
-        # 最先的 -> 反向的最后一个 是 None
-        prev = None
-        # 如果链表没有结束 持续颠倒
-        while (head):
-            # 记录下一个结点
-            next = head.next
-            # 更改当前结点的下一个结点
-            head.next = prev
-            # 本结点作为之前的结点
-            prev = head
-            # 把下一个点 作为当前点
-            head = next
-        # 到 head == None 时，返回上一个结点作为开头结点
-        return prev
+    def reverseList(self, head: ListNode, prev=None) -> ListNode:
+        # head == None 链表结束
+        if (head == None):
+            return prev
+        next = head.next
+        head.next = prev
+        return self.reverseList(next, head)
 
 if __name__ == '__main__':
     # 初始化数组

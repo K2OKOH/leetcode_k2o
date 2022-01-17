@@ -1,6 +1,4 @@
-# Definition for singly-linked list.
-from heapq import heappop, heappush
-from typing import List
+from typing import Optional
 
 class ListNode:
     def __init__(self, val=0, next=None):
@@ -48,29 +46,34 @@ class SingleLinkList(object):
             self.length += 1
 
 class Solution:
-    def reverseList(self, head: ListNode) -> ListNode:
-        # 最先的 -> 反向的最后一个 是 None
-        prev = None
-        # 如果链表没有结束 持续颠倒
-        while (head):
-            # 记录下一个结点
-            next = head.next
-            # 更改当前结点的下一个结点
-            head.next = prev
-            # 本结点作为之前的结点
-            prev = head
-            # 把下一个点 作为当前点
-            head = next
-        # 到 head == None 时，返回上一个结点作为开头结点
-        return prev
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        node = ListNode(0)
+        start = node
+        while (list1 and list2):
+            if (list1.val > list2.val):
+                # 把 list2 结点放入结果列表
+                node.next = list2
+                # list2 去除头部结点
+                list2 = list2.next
+            else:
+                node.next = list1
+                list1 = list1.next
+            # 指向下一个结点
+            node = node.next
+        # 放入剩余结点
+        node.next = list1 if list1 else list2
+        # 返回头结点
+        return start.next
 
 if __name__ == '__main__':
     # 初始化数组
-    head_list = [1,2,3,4,5]
-    head = SingleLinkList(head_list)
+    l1 = [1,2,4]
+    l2 = [1,3,4]
+    l1 = SingleLinkList(l1)
+    l2 = SingleLinkList(l2)
    
     So = Solution()
-    ans = So.reverseList(head)
+    ans = So.mergeTwoLists(l1, l2)
     print(ans)
 
     print('------')
