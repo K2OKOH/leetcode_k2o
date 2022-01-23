@@ -103,8 +103,10 @@ class BinaryTree(object):
         plt.show()
     
 
+# 利用递归处理
 class Solution:
     def isBalanced(self, root: TreeNode) -> bool:
+        # 若根结点 != -1 -> 是平衡树
         return self.helper(root) != -1
 
     def helper(self, root: TreeNode):
@@ -115,6 +117,7 @@ class Solution:
         # 如果子结点非平衡 或 长度不相同
         if (l == -1 or r == -1 or abs(l - r) > 1):
             return -1
+        # 返回当前结点长度
         return 1+max(l,r)
 
 if __name__ == '__main__':
